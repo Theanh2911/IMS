@@ -20,4 +20,7 @@ public interface StocktakingSessionRepository extends JpaRepository<StocktakingS
     void updateActiveSessionsToCompleted(@Param("userId") Integer userId);
 
     Optional<StocktakingSession> findByCreatedByIdAndStatus(Integer id, SessionStatus sessionStatus);
+    
+    @Query("SELECT s FROM StocktakingSession s WHERE s.createdBy.id = :userId ORDER BY s.sessionDate DESC")
+    List<StocktakingSession> findMostRecentSessionByUser(@Param("userId") Integer userId);
 }
