@@ -86,11 +86,9 @@ public class TransactionService implements project2.IMS.Service.TransactionServi
                     .build();
         }
 
-        // Update product quantity (subtract for export)
         product.setQuantity(product.getQuantity() - exportProductRequest.getQuantity());
         productRepository.save(product);
 
-        // Create transaction record
         Transaction transaction = new Transaction();
         transaction.setTransactionNumber(generateTransactionNumber());
         transaction.setTransactionDate(LocalDateTime.now());

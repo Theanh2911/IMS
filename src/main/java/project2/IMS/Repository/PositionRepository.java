@@ -22,4 +22,9 @@ public interface PositionRepository extends JpaRepository<Position, Integer> {
     
     @Query("SELECT COUNT(p) > 0 FROM Position p WHERE p.shelves = :shelves AND p.rowAndColumn = :rowAndColumn")
     boolean existsByShelvesAndRowAndColumn(@Param("shelves") String shelves, @Param("rowAndColumn") String rowAndColumn);
+    
+    @Query("SELECT p FROM Position p WHERE " +
+           "LOWER(p.shelves) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+           "LOWER(p.rowAndColumn) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
+    List<Position> searchPositions(@Param("searchTerm") String searchTerm);
 } 

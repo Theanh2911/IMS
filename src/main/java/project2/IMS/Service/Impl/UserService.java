@@ -94,10 +94,8 @@ public class UserService implements project2.IMS.Service.UserService {
 
         String username = authentication.getName();
 
-        User user = userRepository.findByUsername(username)
+        return userRepository.findByUsername(username)
                 .orElseThrow(()-> new NotFoundException("User Not Found"));
-
-        return user;
 
     }
 
