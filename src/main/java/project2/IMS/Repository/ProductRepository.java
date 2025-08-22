@@ -18,4 +18,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     
     @Query("SELECT p FROM Product p WHERE p.quantity > :threshold ORDER BY p.quantity DESC")
     List<Product> findProductsWithHighStock(@Param("threshold") Integer threshold);
+    
+    @Query("SELECT p FROM Product p WHERE " +
+           "LOWER(p.productName) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+           "LOWER(p.category) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+           "LOWER(p.supplier) LIKE LOWER(CONCAT('%', :searchTerm, '%'))")
+    List<Product> searchProducts(@Param("searchTerm") String searchTerm);
 }
